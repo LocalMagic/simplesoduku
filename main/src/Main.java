@@ -12,12 +12,12 @@ public class Main {
 // jFrame.setTitle("Simple Sudoku");
 
         byte[] badRow = new byte[] {7, 0, 0, 0, 2, 3, 4, 8, 7};
-        byte[] goodRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 8, 5};
-        byte[] buggyRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 8, 5};
+        byte[] goodRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 6, 6};
+        byte[] buggyRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 8, 8};
 
 // System.out.println("badRow is: " + isValidRow(badRow));
         System.out.println("goodRow is: " + isValidRow(goodRow));
-        System.out.println("buggyRow is: " + isValidRow(goodRow));
+        System.out.println("buggyRow is: " + isValidRow(buggyRow));
     }
 
     public static boolean isValidRow(final byte[] row) {
