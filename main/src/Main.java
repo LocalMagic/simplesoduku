@@ -1,14 +1,16 @@
-import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Main {
     public static void main(final String[] args) {
 
         JFrame jFrame = new JFrame();
+
+        JMenuBar jMenuBar = new JMenuBar();
 
         // FRAME setup
         // todo fra: play around and see what jframe. settings you can change
@@ -16,12 +18,39 @@ public class Main {
         jFrame.setTitle("Simple Sudoku");
 
         // PANEL setup
-        JPanel jPanel = new JPanel(new GridLayout(9, 9));
-        jPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        GridLayout gridLayout = new GridLayout(9, 9);
 
-        jFrame.add(new JPanel());
+        JPanel jPanel = new JPanel(gridLayout);
+
+        for (int i = 0; i < gridLayout.getColumns(); i++) {
+
+            for (int j = 0; j < gridLayout.getRows(); j++) {
+
+                JTextField jTextField = new JTextField();
+
+                if (j == 4 && i == 4) {
+                    jTextField.setText("5");
+                }
+
+                jPanel.add(jTextField);
+
+            }
+
+            jPanel.add(new JTextField());
+        }
+        
+        
+        
+        
+        
+
+        jFrame.add(jPanel);
+
         jFrame.setVisible(true);
 
     }
+    
+    
+    public void 
 
 }
