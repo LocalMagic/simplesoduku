@@ -1,56 +1,64 @@
-import java.awt.GridLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class Main {
     public static void main(final String[] args) {
 
-        JFrame jFrame = new JFrame();
+// JFrame jFrame = new JFrame();
+//
+// JMenuBar jMenuBar = new JMenuBar();
+//
+// // FRAME setup
+// // todo fra: play around and see what jframe. settings you can change
+// jFrame.setSize(640, 640);
+// jFrame.setTitle("Simple Sudoku");
 
-        JMenuBar jMenuBar = new JMenuBar();
+        byte[] badRow = new byte[] {7, 0, 0, 0, 2, 3, 4, 8, 7};
+        byte[] goodRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 8, 5};
+        byte[] buggyRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 8, 5};
 
-        // FRAME setup
-        // todo fra: play around and see what jframe. settings you can change
-        jFrame.setSize(640, 640);
-        jFrame.setTitle("Simple Sudoku");
+// System.out.println("badRow is: " + isValidRow(badRow));
+        System.out.println("goodRow is: " + isValidRow(goodRow));
+        System.out.println("buggyRow is: " + isValidRow(goodRow));
+    }
 
-        // PANEL setup
-        GridLayout gridLayout = new GridLayout(9, 9);
+    public static boolean isValidRow(final byte[] row) {
 
-        JPanel jPanel = new JPanel(gridLayout);
+        boolean isValid = false;
 
-        for (int i = 0; i < gridLayout.getColumns(); i++) {
+        if (row.length != 9) {
+            return false;
+        } else {
 
-            for (int j = 0; j < gridLayout.getRows(); j++) {
+            // VALID 1-9
 
-                JTextField jTextField = new JTextField();
+            // go through each element in row
+            for (int i = 0; i < row.length; i++) {
 
-                if (j == 4 && i == 4) {
-                    jTextField.setText("5");
+                // check ii element is VALID 1-9
+                if (row[i] >= 0 && row[i] < 10) {
+                    isValid = true;
+                } else {
+                    return false;
                 }
-
-                jPanel.add(jTextField);
-
             }
 
-            jPanel.add(new JTextField());
+            // Number appears only once
+            for (int i = 0; i < row.length; i++) {
+
+                byte elementToCheck = row[i];
+
+                if (elementToCheck != 0) {
+
+                    for (int j = i + 1; j < row.length - 1; j++) {
+
+                        if (elementToCheck == row[j]) {
+                            return false;
+                        }
+                    }
+                }
+            }
         }
-        
-        
-        
-        
-        
 
-        jFrame.add(jPanel);
-
-        jFrame.setVisible(true);
-
+        return isValid;
     }
-    
-    
-    public void 
 
 }
