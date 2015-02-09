@@ -1,2 +1,14 @@
-!*.iml
 /bin/
+!*.classpath
+!.project
+
+# Eclipse
+!*.settings/
+
+# Intellij
+!*.idea/
+!*.iml
+!*.iws
+
+# Mac
+!*.DS_Store
