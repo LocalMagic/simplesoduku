@@ -1,73 +1,95 @@
+// Rules for SOLVING: numbers 1-9 EXACTLY once in every row, column, section => do later
 
 public class Main {
-    public static void main(final String[] args) {
+	public static void main(final String[] args) {
 
-// JFrame jFrame = new JFrame();
-//
-// JMenuBar jMenuBar = new JMenuBar();
-//
-// // FRAME setup
-// // todo fra: play around and see what jframe. settings you can change
-// jFrame.setSize(640, 640);
-// jFrame.setTitle("Simple Sudoku");
+		Board board = new Board();
+		board.setVisible(true);
 
-        Board board = new Board();
-        board.setVisible(true);
+		byte[] badRow = new byte[] { 1, 0, 0, 0, 2, 3, 4, 7, 7 };
+		byte[] goodRow = new byte[] { 1, 0, 0, 0, 2, 3, 4, 6, 7 };
+		byte[] column = new byte[] { 1, 0, 0, 0, 2, 3, 4, 9, 5, 7, 8 };
+		byte[] array = new byte[] { 1, 0, 6, 0, 2, 3, 4, 5, 7 };
 
-        byte[] badRow = new byte[] {7, 0, 0, 0, 2, 3, 4, 8, 7};
-        byte[] goodRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 6, 7};
-        byte[] buggyRow = new byte[] {1, 0, 0, 0, 2, 3, 4, 23, 5};
+		byte[][] section = new byte[3][3];
+		section[0][0] = 5;
+		section[0][1] = 6;
+		section[0][2] = 4;
+		section[1][0] = 0;
+		section[1][1] = 2;
+		section[1][2] = 3;
+		section[2][0] = 7;
+		section[2][1] = 8;
+		section[2][2] = 9;
 
-        System.out.println("bad Row is: " + isValidRow(badRow));
-        System.out.println("goodRow is: " + isValidRow(goodRow));
-        System.out.println("buggyRow is: " + isValidRow(buggyRow));
-    }
+		convertTo1D(section);
 
-    public static boolean isValidRow(final byte[] row) {
+		byte[] section1D = convertTo1D(section);
 
-        if (row.length == 9 && isRowRangeValid(row) && isNumberOnce(row)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+		System.out.println("array is: " + isValidArray(array));
 
-    // numbers 1-9
-    public static boolean isRowRangeValid(final byte[] row) {
-        boolean isRowRangeValid = false;
-        for (int i = 0; i < row.length; i++) {
-            byte currentNumber = row[i];
+		System.out.println(isValidArray(column));
+		System.out.println(isValidArray(section1D));
 
-            // check if element is VALID 1-9
-            if (row[i] >= 0 && row[i] < 10) {
-                isRowRangeValid = true;
-            } else {
-                isRowRangeValid = false;
-                return false;
-            }
-        }
+	}
 
-        return isRowRangeValid;
-    }
+	// Rules for Validation: only numbers 1-9 and empty, every number only once,
+	// arrays valid??
 
-    // Numbers only once
-    public static boolean isNumberOnce(final byte[] row) {
-        for (int i = 0; i < row.length - 1; i++) {
+	// always 9 places, range valid, number once
+	public static boolean isValidArray(final byte[] array) {
+		if (array.length == 9 && isRangeValid(array) && isNumberOnce(array)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-            byte elementToCheck = row[i];
+	// need to convert section 2D array => 1D array, so can call same method
+	public static byte[] convertTo1D(byte[][] section) {
+		byte[] oneDSection = new byte[section.length * section.length];
+		for (int i = 0; i < section.length; i++) {
+			for (byte j = 0; j < section.length; j++) {
+				oneDSection[(i * section.length) + j] = section[i][j];
+			}
+		}
+		return oneDSection;
+	}
 
-            if (elementToCheck != 0) {
+	// numbers 1-9
+	public static boolean isRangeValid(final byte[] array) {
+		boolean isRangeValid = false;
+		for (int i = 0; i < array.length; i++) {
+			byte currentNumber = array[i];
 
-                for (int j = i + 1; j < row.length; j++) {
+			// check if element is VALID 1-9
+			if (array[i] >= 0 && array[i] < 10) {
+				isRangeValid = true;
+			} else {
+				isRangeValid = false;
+				return false;
+			}
+		}
+		return isRangeValid;
+	}
 
-                    if (elementToCheck == row[j]) {
-                        return false;
-                    }
-                }
-            }
-        }
+	// Numbers only once
+	public static boolean isNumberOnce(final byte[] array) {
+		for (int i = 0; i < array.length - 1; i++) {
 
-        return true;
-    }
+			byte elementToCheck = array[i];
+
+			if (elementToCheck != 0) {
+
+				for (int j = i + 1; j < array.length; j++) {
+
+					if (elementToCheck == array[j]) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 
 }
