@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 /**
@@ -40,9 +42,9 @@ public class GameFrame extends JFrame implements ActionListener {
         buttonJPanel.add(validationJButton);
 
         setupBoardJPanel();
+        boardJPanel.setPreferredSize(new Dimension(480, 480));
 
-        buttonJPanel.setBorder(BorderFactory.createLineBorder(Color.green, 5));
-        parentJPanel.setBorder(BorderFactory.createLineBorder(Color.red, 5));
+        buttonJPanel.setPreferredSize(new Dimension(100, 100));
 
         parentJPanel.add(boardJPanel);
         parentJPanel.add(buttonJPanel);
@@ -54,21 +56,17 @@ public class GameFrame extends JFrame implements ActionListener {
     private void setupBoardJPanel() {
 
         boardGridLayout = new GridLayout(9, 9);
-
         boardJPanel = new JPanel(boardGridLayout);
 
         for (int i = 0; i < boardGridLayout.getRows(); i++) {
             for (int j = 0; j < boardGridLayout.getColumns(); j++) {
 
                 textFields[i][j] = new JTextField("0");
+                textFields[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 
                 boardJPanel.add(textFields[i][j]);
-
             }
         }
-
-        textFields[4][1].setText("5");
-        boardJPanel.setBorder(BorderFactory.createLineBorder(Color.blue, 5));
     }
 
     private void setupBoardWithSubSections() {
