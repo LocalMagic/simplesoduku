@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,7 +23,11 @@ public class GameFrame extends JFrame implements ActionListener {
 
     JTextField[][] textFields = new JTextField[9][9];
     private JPanel boardJPanel;
+
     private GridLayout boardGridLayout;
+    private final JPanel parentJPanel = new JPanel();
+    private final JPanel buttonJPanel = new JPanel();
+    private final JLabel jLabel = new JLabel("Validation result goes here");
 
     public GameFrame() {
         super("Sudoku");
@@ -31,29 +35,29 @@ public class GameFrame extends JFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        FlowLayout parentFlowLayout = new FlowLayout();
-
-        JPanel parentJPanel = new JPanel(parentFlowLayout);
-        JPanel buttonJPanel = new JPanel();
-
-        JButton validationJButton = new JButton();
-        validationJButton.addActionListener(this);
-        validationJButton.setText("Validate");
-        buttonJPanel.add(validationJButton);
-
-        setupBoardJPanel();
-        boardJPanel.setPreferredSize(new Dimension(480, 480));
-
-        buttonJPanel.setPreferredSize(new Dimension(100, 100));
-
-        parentJPanel.add(boardJPanel);
-        parentJPanel.add(buttonJPanel);
+        setupButtonPanel();
+        setupBoardPanel();
+        setupParentPanel();
 
         add(parentJPanel);
 
     }
 
-    private void setupBoardJPanel() {
+    private void setupParentPanel() {
+        parentJPanel.add(boardJPanel);
+        parentJPanel.add(buttonJPanel);
+        parentJPanel.add(jLabel);
+    }
+
+    private void setupButtonPanel() {
+        JButton validationJButton = new JButton("Validate");
+        validationJButton.addActionListener(this);
+
+        buttonJPanel.add(validationJButton);
+        buttonJPanel.setPreferredSize(new Dimension(100, 100));
+    }
+
+    private void setupBoardPanel() {
 
         boardGridLayout = new GridLayout(9, 9);
         boardJPanel = new JPanel(boardGridLayout);
@@ -67,6 +71,8 @@ public class GameFrame extends JFrame implements ActionListener {
                 boardJPanel.add(textFields[i][j]);
             }
         }
+
+        boardJPanel.setPreferredSize(new Dimension(480, 480));
     }
 
     private void setupBoardWithSubSections() {
@@ -109,23 +115,45 @@ public class GameFrame extends JFrame implements ActionListener {
         byte[] currentArrayToValidate = new byte[9];
         boolean isValid = true;
 
+        // check rows
         for (int i = 0; i < boardGridLayout.getRows(); i++) {
             for (int j = 0; j < boardGridLayout.getColumns(); j++) {
 
                 currentArrayToValidate[j] = Byte.valueOf(textFields[i][j].getText());
-                if (!Main.isValidArray(currentArrayToValidate)) {
-                    isValid = false;
-                }
+                System.out.print(currentArrayToValidate[j] + ",");
 
+            }
+
+            System.out.println();
+
+            if (!Main.isValidArray(currentArrayToValidate)) {
+                isValid = false;
+            }
+
+        }
+
+        // check columns
+        for (int i = 0; i < boardGridLayout.getRows(); i++) {
+            for (int j = 0; j < boardGridLayout.getColumns(); j++) {
+
+                currentArrayToValidate[j] = Byte.valueOf(textFields[j][i].getText());
+                System.out.print(currentArrayToValidate[j] + ",");
+
+            }
+
+            System.out.println();
+
+            if (!Main.isValidArray(currentArrayToValidate)) {
+                isValid = false;
             }
 
         }
 
         if (isValid) {
-            System.out.println("Congratulations the board is valid");
-
+            jLabel.setText("Congratulations the board is valid");
         } else {
-            System.out.println("Sorry your solution is false");
+            jLabel.setText("Sorry your solution is false");
+
         }
 
     }
