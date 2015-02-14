@@ -29,6 +29,8 @@ public class GameFrame extends JFrame implements ActionListener {
     private final JPanel buttonJPanel = new JPanel();
     private final JLabel jLabel = new JLabel("Validation result goes here");
 
+    private Rules rules = new Rules();
+
     public GameFrame() {
         super("Sudoku");
         setSize(480, 600);
@@ -112,49 +114,24 @@ public class GameFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent e) {
 
-        byte[] currentArrayToValidate = new byte[9];
-        boolean isValid = true;
+        byte[][] board = new byte[9][9];
 
-        // check rows
         for (int i = 0; i < boardGridLayout.getRows(); i++) {
             for (int j = 0; j < boardGridLayout.getColumns(); j++) {
-
-                currentArrayToValidate[j] = Byte.valueOf(textFields[i][j].getText());
-                System.out.print(currentArrayToValidate[j] + ",");
-
+                board[i][j] = Byte.valueOf(textFields[i][j].getText());
             }
-
-            System.out.println();
-
-            if (!Main.isValidArray(currentArrayToValidate)) {
-                isValid = false;
-            }
-
         }
 
-        // check columns
-        for (int i = 0; i < boardGridLayout.getRows(); i++) {
-            for (int j = 0; j < boardGridLayout.getColumns(); j++) {
+        Rules rules = new Rules();
+        rules.isValidBoard(board);
 
-                currentArrayToValidate[j] = Byte.valueOf(textFields[j][i].getText());
-                System.out.print(currentArrayToValidate[j] + ",");
-
-            }
-
-            System.out.println();
-
-            if (!Main.isValidArray(currentArrayToValidate)) {
-                isValid = false;
-            }
-
-        }
-
-        if (isValid) {
-            jLabel.setText("Congratulations the board is valid");
-        } else {
-            jLabel.setText("Sorry your solution is false");
-
-        }
+// if (isValid) {
+// jLabel.setText("Congratulations the board is valid");
+// } else {
+// jLabel.setText("Sorry your solution is false");
+//
+// }
 
     }
+
 }

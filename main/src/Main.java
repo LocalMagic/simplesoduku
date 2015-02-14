@@ -22,77 +22,20 @@ public class Main {
         section[2][1] = 8;
         section[2][2] = 9;
 
-        convertTo1D(section);
-
-        byte[] section1D = convertTo1D(section);
-
-        System.out.println("array is: " + isValidArray(array));
-
-        System.out.println(isValidArray(column));
-        System.out.println(isValidArray(section1D));
+// Rules rules = new Rules();
+//
+// rules.convertTo1D(section);
+//
+// byte[] section1D = rules.convertTo1D(section);
+//
+// System.out.println("array is: " + rules.isValidArray(array));
+//
+// System.out.println(rules.isValidArray(column));
+// System.out.println(rules.isValidArray(section1D));
 
     }
 
     // Rules for Validation: only numbers 1-9 and empty, every number only once,
     // arrays valid??
-
-    // always 9 places, range valid, number once
-    public static boolean isValidArray(final byte[] array) {
-        if (array.length == 9 && isRangeValid(array) && isNumberOnce(array)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // need to convert section 2D array => 1D array, so can call same method
-    public static byte[] convertTo1D(final byte[][] section) {
-        byte[] oneDSection = new byte[section.length * section.length];
-        for (int i = 0; i < section.length; i++) {
-            for (byte j = 0; j < section.length; j++) {
-                oneDSection[(i * section.length) + j] = section[i][j];
-            }
-        }
-
-        return oneDSection;
-    }
-
-    // numbers 1-9
-    public static boolean isRangeValid(final byte[] array) {
-        boolean isRangeValid = false;
-        for (int i = 0; i < array.length; i++) {
-            byte currentNumber = array[i];
-
-            // check if element is VALID 1-9
-            if (array[i] >= 0 && array[i] < 10) {
-                isRangeValid = true;
-            } else {
-                isRangeValid = false;
-                return false;
-            }
-        }
-
-        return isRangeValid;
-    }
-
-    // Numbers only once
-    public static boolean isNumberOnce(final byte[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-
-            byte elementToCheck = array[i];
-
-            if (elementToCheck != 0) {
-
-                for (int j = i + 1; j < array.length; j++) {
-
-                    if (elementToCheck == array[j]) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
 
 }
