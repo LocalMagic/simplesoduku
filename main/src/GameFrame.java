@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,7 +18,7 @@ import javax.swing.WindowConstants;
 /**
  * Created by amurray on 08/02/15.
  */
-public class GameFrame extends JFrame implements ActionListener {
+public class GameFrame extends JFrame implements ActionListener, FocusListener {
 
     private JTextField[][] f = new JTextField[9][9];
     private JPanel[][] p = new JPanel[3][3];
@@ -27,13 +29,14 @@ public class GameFrame extends JFrame implements ActionListener {
     private GridLayout boardGridLayout;
     private final JPanel parentJPanel = new JPanel();
     private final JPanel buttonJPanel = new JPanel();
-    private final JLabel jLabel = new JLabel("Validation result goes here");
+    private final JLabel jLabel = new JLabel();
 
     private Rules rules = new Rules();
 
     public GameFrame() {
         super("Sudoku");
-        setSize(480, 600);
+        setSize(490, 600);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -56,12 +59,16 @@ public class GameFrame extends JFrame implements ActionListener {
         validationJButton.addActionListener(this);
 
         buttonJPanel.add(validationJButton);
-        buttonJPanel.setPreferredSize(new Dimension(100, 100));
+        buttonJPanel.setPreferredSize(new Dimension(480, 40));
     }
 
+    /**
+     * This created the main board panel, and adds the textFields used to input numbers for the game. These textFields
+     * are also formatted and have different background colors set to them depending on which subsection they are in.
+     */
     private void setupBoardPanel() {
 
-        boardGridLayout = new GridLayout(9, 9);
+        boardGridLayout = new GridLayout(9, 9, 2, 2); // the 2,2 is used to add a gap between the cells for a border
         boardJPanel = new JPanel(boardGridLayout);
 
         for (int i = 0; i < boardGridLayout.getRows(); i++) {
@@ -69,48 +76,28 @@ public class GameFrame extends JFrame implements ActionListener {
 
                 textFields[i][j] = new JTextField("0");
                 textFields[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                textFields[i][j].setBorder(BorderFactory.createLineBorder(Color.lightGray, 0)); //
+                textFields[i][j].addFocusListener(this);
+
+                /* sets the background color to light gray for particular subsections, uses the coordinates to decide on
+                 * which ones should be made gray etc. */
+                if (j < 3 && i < 3 || j > 5 && i < 3 || j < 3 && i > 5 || j > 5 && i > 5
+                        || j > 2 && j < 6 && i < 6 && i > 2) {
+                    textFields[i][j].setBackground(Color.lightGray);
+                }
 
                 boardJPanel.add(textFields[i][j]);
+
             }
         }
 
         boardJPanel.setPreferredSize(new Dimension(480, 480));
     }
 
-    private void setupBoardWithSubSections() {
-        for (int x = 0; x <= 8; x++) {
-            for (int y = 0; y <= 8; y++) {
-                f[x][y] = new JTextField(1);
-            }
-        }
-
-        for (int x = 0; x <= 2; x++) {
-            for (int y = 0; y <= 2; y++) {
-                p[x][y] = new JPanel(new GridLayout(3, 3));
-                p[x][y].setBorder(BorderFactory.createLineBorder(Color.black, 2));
-
-            }
-        }
-
-        setLayout(new GridLayout(3, 3));
-
-        // only creates one subSection you need to call this multiple times
-        for (int u = 0; u <= 2; u++) {
-            for (int i = 0; i <= 2; i++) {
-                for (int x = 0; x <= 2; x++) {
-                    for (int y = 0; y <= 2; y++) {
-                        p[u][i].add(f[y][x]);
-                        f[y][x].setText(y + "," + x);
-                    }
-
-                }
-
-                add(p[u][i]);
-
-            }
-        }
-    }
-
+    /**
+     * This is used to handle events from the buttons. Because we added a actionListener to the button this is called
+     * when it is pressed.
+     */
     @Override
     public void actionPerformed(final ActionEvent e) {
 
@@ -123,15 +110,30 @@ public class GameFrame extends JFrame implements ActionListener {
         }
 
         Rules rules = new Rules();
-        rules.isValidBoard(board);
+        if (rules.isValidBoard(board)) {
+            jLabel.setText("Congratulations the board is valid");
+        } else {
+            jLabel.setText("Sorry your solution is false");
 
-// if (isValid) {
-// jLabel.setText("Congratulations the board is valid");
-// } else {
-// jLabel.setText("Sorry your solution is false");
-//
-// }
+        }
 
     }
 
+    /**
+     * This is used for the textFields. Everytime a textfield is focussed on then we select all the text making it
+     * easier for the user to change the values.
+     */
+    @Override
+    public void focusGained(final FocusEvent e) {
+        if (e.getSource() instanceof JTextField) {
+            ((JTextField) e.getSource()).selectAll();
+
+        }
+    }
+
+    /**
+     * This is used for the textFields. Required but currently doesn't do anything.
+     */
+    @Override
+    public void focusLost(final FocusEvent e) { }
 }
