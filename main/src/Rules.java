@@ -1,6 +1,4 @@
-/**
- * Created by amurray on 14/02/15.
- */
+
 public class Rules {
 
     public boolean isValidBoard(final byte[][] boardState) {

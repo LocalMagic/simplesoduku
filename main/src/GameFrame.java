@@ -15,9 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-/**
- * Created by amurray on 08/02/15.
- */
 public class GameFrame extends JFrame implements ActionListener, FocusListener {
 
     private JTextField[][] f = new JTextField[9][9];
@@ -120,7 +117,7 @@ public class GameFrame extends JFrame implements ActionListener, FocusListener {
     }
 
     /**
-     * This is used for the textFields. Everytime a textfield is focussed on then we select all the text making it
+     * This is used for the textFields. Every time a textfield is focused on then we select all the text making it
      * easier for the user to change the values.
      */
     @Override
