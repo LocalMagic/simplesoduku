@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Rules {
 
 	public boolean isValidBoard(final byte[][] boardState) {
@@ -20,13 +18,16 @@ public class Rules {
 			}
 		}
 
-		/*
-		 * using the methods in this class you need to work out whether the
-		 * parsed boardState byte[][] is a valid sudoku game and parse true or
-		 * false
-		 */
-
 		boolean sectionValid = isValidArray(getSection(boardState));
+		boolean section2Valid = isValidArray(get2Section(boardState));
+
+		if (sectionValid == false) {
+			isValid = false;
+		}
+
+		if (section2Valid == false) {
+			isValid = false;
+		}
 
 		return isValid;
 	}
@@ -48,27 +49,56 @@ public class Rules {
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-
 				section[count] = boardState[i][j];
 				count++;
 			}
-
 		}
-
 		return section;
 	}
 
-	// need to convert section 2D array => 1D array, so can call same method
-	private byte[] convertTo1D(final byte[][] section) {
-		byte[] oneDSection = new byte[section.length * section.length];
-		for (int i = 0; i < section.length; i++) {
-			for (byte j = 0; j < section.length; j++) {
-				oneDSection[(i * section.length) + j] = section[i][j];
+	// 2nd section
+	public byte[] get2Section(final byte[][] boardState) {
+
+		byte[] section2 = new byte[9];
+		int count = 0;
+
+		for (int i = 0; i < i + 3; i++) {
+			for (int j = 3; j < 6; j++) {
+				section2[count] = boardState[i][j];
+				count++;
 			}
 		}
-
-		return oneDSection;
+		return section2;
 	}
+
+	// more sections
+
+	public byte[] getMoreSection(final byte[][] boardState) {
+
+		byte[] section4 = new byte[9];
+
+		int count = 0;
+
+		for (int i = 3; i < 6; i++) {
+			for (int j = 0; j < 3; j++) {
+				section4[count] = boardState[i][j];
+				count++;
+			}
+		}
+		return section4;
+	}
+
+	// // need to convert section 2D array => 1D array, so can call same method
+	// private byte[] convertTo1D(final byte[][] section) {
+	// byte[] oneDSection = new byte[section.length * section.length];
+	// for (int i = 0; i < section.length; i++) {
+	// for (byte j = 0; j < section.length; j++) {
+	// oneDSection[(i * section.length) + j] = section[i][j];
+	// }
+	// }
+	//
+	// return oneDSection;
+	// }
 
 	// numbers 1-9
 	private boolean isRangeValid(final byte[] array) {
