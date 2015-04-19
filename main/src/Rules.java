@@ -62,7 +62,7 @@ public class Rules {
 		byte[] section2 = new byte[9];
 		int count = 0;
 
-		for (int i = 0; i < i + 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			for (int j = 3; j < 6; j++) {
 				section2[count] = boardState[i][j];
 				count++;
