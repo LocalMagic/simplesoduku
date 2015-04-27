@@ -22,13 +22,13 @@ public class Rules {
 		//there has to be a more elegant way of doing the sections, but nothing i#ve tried works
 		boolean sectionValid = isValidArray(getSection(boardState));
 		boolean section2Valid = isValidArray(get2Section(boardState));
-		boolean section3Valid = isValidArray(get2Section(boardState));
-		boolean section4Valid = isValidArray(get2Section(boardState));
-		boolean section5Valid = isValidArray(get2Section(boardState));
-		boolean section6Valid = isValidArray(get2Section(boardState));
-		boolean section7Valid = isValidArray(get2Section(boardState));
-		boolean section8Valid = isValidArray(get2Section(boardState));
-		boolean section9Valid = isValidArray(get2Section(boardState));
+		boolean section3Valid = isValidArray(get3Section(boardState));
+		boolean section4Valid = isValidArray(get4Section(boardState));
+		boolean section5Valid = isValidArray(get5Section(boardState));
+		boolean section6Valid = isValidArray(get6Section(boardState));
+		boolean section7Valid = isValidArray(get7Section(boardState));
+		boolean section8Valid = isValidArray(get8Section(boardState));
+		boolean section9Valid = isValidArray(get9Section(boardState));
 		
 
 		if (sectionValid == false) {
