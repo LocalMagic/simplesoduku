@@ -1,3 +1,4 @@
+
 public class Rules {
 
 	public boolean isValidBoard(final byte[][] boardState) {
@@ -18,14 +19,45 @@ public class Rules {
 			}
 		}
 
+		//there has to be a more elegant way of doing the sections, but nothing i#ve tried works
 		boolean sectionValid = isValidArray(getSection(boardState));
 		boolean section2Valid = isValidArray(get2Section(boardState));
+		boolean section3Valid = isValidArray(get2Section(boardState));
+		boolean section4Valid = isValidArray(get2Section(boardState));
+		boolean section5Valid = isValidArray(get2Section(boardState));
+		boolean section6Valid = isValidArray(get2Section(boardState));
+		boolean section7Valid = isValidArray(get2Section(boardState));
+		boolean section8Valid = isValidArray(get2Section(boardState));
+		boolean section9Valid = isValidArray(get2Section(boardState));
+		
 
 		if (sectionValid == false) {
 			isValid = false;
 		}
 
 		if (section2Valid == false) {
+			isValid = false;
+		}
+
+		if (section3Valid == false) {
+			isValid = false;
+		}
+		if (section4Valid == false) {
+			isValid = false;
+		}
+		if (section5Valid == false) {
+			isValid = false;
+		}
+		if (section6Valid == false) {
+			isValid = false;
+		}
+		if (section7Valid == false) {
+			isValid = false;
+		}
+		if (section8Valid == false) {
+			isValid = false;
+		}
+		if (section9Valid == false) {
 			isValid = false;
 		}
 
@@ -70,10 +102,24 @@ public class Rules {
 		}
 		return section2;
 	}
+	
+	// 3rd section
+	public byte[] get3Section(final byte[][] boardState) {
 
-	// more sections
+		byte[] section3 = new byte[9];
+		int count = 0;
 
-	public byte[] getMoreSection(final byte[][] boardState) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 6; j < 9; j++) {
+				section3[count] = boardState[i][j];
+				count++;
+				}
+			}
+			return section3;
+		}
+
+	// section 4
+	public byte[] get4Section(final byte[][] boardState) {
 
 		byte[] section4 = new byte[9];
 
@@ -87,6 +133,91 @@ public class Rules {
 		}
 		return section4;
 	}
+	
+	// section 5
+	public byte[] get5Section(final byte[][] boardState) {
+
+			byte[] section5 = new byte[9];
+
+			int count = 0;
+
+			for (int i = 3; i < 6; i++) {
+				for (int j = 3; j < 6; j++) {
+					section5[count] = boardState[i][j];
+					count++;
+				}
+			}
+			return section5;
+		}
+	
+	// section 6
+	public byte[] get6Section(final byte[][] boardState) {
+
+			byte[] section6 = new byte[9];
+
+			int count = 0;
+
+			for (int i = 3; i < 6; i++) {
+				for (int j = 6; j < 9; j++) {
+					section6[count] = boardState[i][j];
+					count++;
+				}
+			}
+			return section6;
+		}
+		
+		// section 7
+		public byte[] get7Section(final byte[][] boardState) {
+
+			byte[] section7 = new byte[9];
+
+			int count = 0;
+
+			for (int i = 6; i < 9; i++) {
+				for (int j = 0; j < 3; j++) {
+					section7[count] = boardState[i][j];
+					count++;
+				}
+			}
+			return section7;
+		}
+		
+		// section 8
+		public byte[] get8Section(final byte[][] boardState) {
+
+			byte[] section8 = new byte[9];
+
+			int count = 0;
+
+			for (int i = 6; i < 9; i++) {
+				for (int j = 3; j < 6; j++) {
+					section8[count] = boardState[i][j];
+					count++;
+						}
+					}
+					return section8;
+				}
+				
+	// section 9
+			
+	public byte[] get9Section(final byte[][] boardState) {
+
+			byte[] section9 = new byte[9];
+
+			int count = 0;
+
+			for (int i = 6; i < 9; i++) {
+				for (int j = 6; j < 9; j++) {
+					section9[count] = boardState[i][j];
+					count++;
+				}
+			}
+			return section9;
+			}
+	
+	
+	
+
 
 	// // need to convert section 2D array => 1D array, so can call same method
 	// private byte[] convertTo1D(final byte[][] section) {
